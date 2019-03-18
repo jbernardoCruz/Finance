@@ -8,7 +8,6 @@ from uAI_typedef import *
 class Finance():
 
   ''' FINANCE CLASS '''
-
   def __init__(self, data):
     self.data = data
     self.set_RSI()
@@ -114,10 +113,12 @@ class Finance():
     ----------
     [in] type = 'df' (default) or 'mat' \n
     [out] df['RSI'] 
-    '''
+    '''  
     data = self.data
+    
     UpI = [0]  
-    DoI = [0]  
+    DoI = [0] 
+    
     for i in range ((data[CLOSE].size)-1):
         change = data.get_value(i+1, CLOSE) - data.get_value(i, CLOSE)  
         if change >=0: UpD = change
@@ -136,7 +137,8 @@ class Finance():
 
     rsi = np.array(100 - (100 / (1 + rs)))
     rsi_out = pd.DataFrame(rsi[:,0], columns=[RSI])
-
+    rsi_out = rsi_out.replace(np.NaN, 0)
+    
     return self.returnValue(rsi_out, type)
 
   # Set RSI 
